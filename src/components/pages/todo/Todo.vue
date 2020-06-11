@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Search />
+    <SearchTodo />
     <div class="addNew" @click="handleAddnew">
       <div class="modal-add" id="modal-add" >
         <img class="icon" src="../../../assets/Apps-Dialog-Add-icon.png" alt />
@@ -14,7 +14,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import Search from "./Search";
+import SearchTodo from "./SearchTodo";
 import Table from "./table/Table";
 import AddForm from "./AddForm";
 import axios from "axios";
