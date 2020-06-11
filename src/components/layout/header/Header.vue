@@ -36,7 +36,6 @@
 </template>
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
-
 export default {
   data() {
     return {
@@ -51,7 +50,6 @@ export default {
 
   methods: {
     getUser() {
-      console.log("user ", this.$cookies.get("user"));
       return (this.user = $cookies.get("user"));
     },
     removeDataLocal() {

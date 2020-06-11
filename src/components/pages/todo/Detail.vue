@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div>Title</div>
-    <div>Content</div>
-    <div>{{$route.params.id}}</div>
+    <div>_id: {{$route.params.id}}</div>
     <div>{{findItem($route.params.id)}}</div>
   </div>
 </template>

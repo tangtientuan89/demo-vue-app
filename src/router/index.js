@@ -20,7 +20,8 @@ const router = new Router({
       name: "Login",
       component: Login,
       meta: {
-        isLogin: true
+        isLogin: true,
+        us: 'nam'
       }
     },
     { path: "/to-do", name: "Todo", component: Todo },
@@ -48,6 +49,7 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     console.log("object", Vue.$cookies.get("token"));
+    console.log(to.matched.meta.us);
     if (Vue.$cookies.get("token")) {
       next({
         path: "/",
