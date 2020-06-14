@@ -4,7 +4,8 @@ import Home from "../components/pages/home/Home";
 import Login from "../components/pages/login/Login";
 import Todo from "../components/pages/todo/Todo";
 import Admin from "../components/pages/admin/Admin";
-import Detail from "../components/pages/todo/Detail"
+import Detail from "../components/pages/todo/Detail";
+import Error from "../components/pages/error/Error";
 Vue.use(Router);
 
 const router = new Router({
@@ -20,12 +21,11 @@ const router = new Router({
       name: "Login",
       component: Login,
       meta: {
-        isLogin: true,
-        us: 'nam'
+        isLogin: true
       }
     },
     { path: "/to-do", name: "Todo", component: Todo },
-    { path: "/admin", name: "admin", component: Admin },
+    { path: "/admin", name: "Admin", component: Admin },
     {
       path: "/about",
       name: "About",
@@ -38,9 +38,14 @@ const router = new Router({
         )
     },
     {
-      path:"/to-do/:title-post:id.html",
-      name:"Detail",
-      component:Detail,
+      path: "/error",
+      name: "Error",
+      component: Error
+    },
+    {
+      path: "/to-do/:title-post:id.html",
+      name: "Detail",
+      component: Detail
     }
   ]
 });
@@ -48,8 +53,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.isLogin)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    console.log("object", Vue.$cookies.get("token"));
-    console.log(to.matched.meta.us);
+    console.log("cookie token ", Vue.$cookies.get("token"));
     if (Vue.$cookies.get("token")) {
       next({
         path: "/",
@@ -62,4 +66,26 @@ router.beforeEach((to, from, next) => {
     next(); // make sure to always call next()!
   }
 });
+router.beforeEach((to, from, next) => {
+  if (to.name == "Todo" && !Vue.$cookies.get("token")) {
+    alert("hãy đăng nhập để sử dụng chức năng này");
+    next({
+      path: "/login",
+      query: {}
+    });
+  } else {
+    next();
+  }
+});
+router.beforeEach((to, from, next) => {
+  if (to.name == "Admin" && Vue.$cookies.get("type") !== '1') {
+    next({
+      path: "/error",
+      query: {}
+    });
+  } else {
+    next();
+  }
+});
+
 export default router;

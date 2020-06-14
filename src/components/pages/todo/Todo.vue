@@ -1,14 +1,25 @@
 <template>
   <div class="container">
-    <SearchTodo />
-    <div class="addNew" @click="handleAddnew">
-      <div class="modal-add" id="modal-add" >
+    <SearchTodo @giveTextSearch="handleSearch" />
+    <div class="addNew" @click="isAddForm">
+      <div class="modal-add" id="modal-add">
         <img class="icon" src="../../../assets/Apps-Dialog-Add-icon.png" alt />
       </div>
       <label for="modal-add">Add New</label>
     </div>
-    <AddForm v-if="showAddnew==true" :handleAddnew="handleAddnew"/>
-    <Table :data="data" />
+    <AddForm
+      v-if="statusForm=='add'"
+      :isAddForm="isAddForm"
+      :isHideForm="isHideForm"
+      :addData="addData"
+    />
+    <EditForm
+      v-if="statusForm=='edit'"
+      :isEditForm="isEditForm"
+      :isHideForm="isHideForm"
+      :editData="editData"
+    />
+    <Table :data="data" :deleteData="deleteData" :isEditForm="isEditForm" :statusForm="statusForm" />
   </div>
 </template>
 
@@ -17,38 +28,110 @@ import { mapState, mapActions } from "vuex";
 import SearchTodo from "./SearchTodo";
 import Table from "./table/Table";
 import AddForm from "./AddForm";
+import EditForm from "./EditForm";
 import axios from "axios";
 import host from "../../../../config/host";
 export default {
   components: {
-    Search,
+    SearchTodo,
     Table,
-    AddForm
+    AddForm,
+    EditForm
   },
   data() {
     return {
       data: "",
-      showAddnew: false
+      textSearch: "",
+      statusForm: "hide"
     };
   },
   mounted() {
-    axios({
-      method: "get",
-      url: host + "/api/to-do-list",
-      headers: {
-        Authorization: `Bearer token=${$cookies.get("token")}`,
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      this.data = res.data.data;
-      localStorage.setItem("dataTodo", JSON.stringify(this.data));
-      this.$store.dispatch("getDataTodo", this.data);
-    });
+    this.getData();
   },
   computed: {},
   methods: {
-    handleAddnew() {
-      return this.showAddnew=!this.showAddnew;
+    isAddForm() {
+      return (this.statusForm = "add");
+    },
+    isEditForm() {
+      return (this.statusForm = "edit");
+    },
+    isHideForm() {
+      return (this.statusForm = "hide");
+    },
+    handleSearch(text) {
+      this.textSearch = text;
+      this.getData();
+    },
+
+    getData() {
+      axios({
+        method: "GET",
+        url: host + "/api/to-do-list?search=" + this.textSearch,
+        headers: {
+          Authorization: `Bearer token=${$cookies.get("token")}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => {
+          if (res.data.code == 200) {
+            this.data = res.data.data;
+            localStorage.setItem("dataTodo", JSON.stringify(this.data));
+           return this.$store.dispatch("getDataTodo", this.data);
+          }
+          if(res.data.code == 404){
+            this.$router.push("/error")
+          }
+        })
+        .catch(err => this.$router.push("/error"));
+    },
+    addData(title, content) {
+      axios({
+        method: "POST",
+        url: host + "/api/to-do-list",
+        data: { title: title, content: content },
+        headers: {
+          Authorization: `Bearer token=${$cookies.get("token")}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => {
+          console.log("res", res);
+          this.getData();
+        })
+        .catch(err => console.log(err));
+    },
+    editData(_id, title, content) {
+      console.log("dataedit", title);
+      axios({
+        method: "PUT",
+        url: host + "/api/to-do-list?id=" + _id,
+        data: { title: title, content: content },
+        headers: {
+          Authorization: `Bearer token=${$cookies.get("token")}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => {
+          console.log("res", res);
+          this.getData();
+        })
+        .catch(err => console.log(err));
+    },
+    deleteData(id) {
+      axios({
+        method: "DELETE",
+        url: host + "/api/to-do-list?id=" + id,
+        headers: {
+          Authorization: `Bearer token=${$cookies.get("token")}`,
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => {
+          console.log("delete success");
+          this.getData();
+        })
+        .catch(err => console.log(err));
     }
   }
 };

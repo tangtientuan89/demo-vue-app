@@ -8,8 +8,8 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item to="/to-do">Todo</b-nav-item>
+          <b-nav-item to="/admin" v-if="checkAdmin()">Admin</b-nav-item>
           <b-nav-item to="/about">About</b-nav-item>
-          <b-nav-item to="/admin">Admin</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
@@ -19,13 +19,12 @@
               <template v-slot:button-content>
                 <em :key="getUser()">{{user}}</em>
               </template>
-              <b-dropdown-item to="/" @click="getParams">Profile</b-dropdown-item>
+              <b-dropdown-item to="/">ChangePassword</b-dropdown-item>
               <b-dropdown-item to="/" @click="removeDataLocal">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </div>
           <div v-if="isLogin == false">
             <router-link to="/login">
-        
               <b-btn>Login</b-btn>
             </router-link>
           </div>
@@ -35,7 +34,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -52,15 +51,16 @@ export default {
     getUser() {
       return (this.user = $cookies.get("user"));
     },
+    checkAdmin() {
+      if($cookies.get("type")==1) 
+      return true;
+    },
     removeDataLocal() {
       $cookies.remove("token");
       $cookies.remove("type");
       $cookies.remove("user");
       this.$store.dispatch("isLogin");
       localStorage.clear();
-    },
-    getParams() {
-      console.log("$route.params ", this);
     }
   }
 };
