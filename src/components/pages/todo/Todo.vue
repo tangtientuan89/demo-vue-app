@@ -77,11 +77,11 @@ export default {
           if (res.data.code == 200) {
             this.data = res.data.data;
             localStorage.setItem("dataTodo", JSON.stringify(this.data));
-           return this.$store.dispatch("getDataTodo", this.data);
+            return this.$store.dispatch("getDataTodo", this.data);
           }
-          if(res.data.code == 404){
-            this.$store.dispatch("getDataError",res.data.message)
-             this.$router.push("/error");
+          if (res.data.code == 404) {
+            this.$store.dispatch("getDataError", res.data.message);
+            this.$router.push("/error");
           }
         })
         .catch(err => this.$router.push("/error"));
@@ -138,7 +138,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .addNew {
   display: flex;
   justify-content: start;
