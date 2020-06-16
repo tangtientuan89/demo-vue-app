@@ -1,2 +1,2 @@
-const host="http://localhost:3000"
+const host="https://demo-server-vuejs.herokuapp.com"
 export default host
