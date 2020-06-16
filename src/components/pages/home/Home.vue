@@ -5,9 +5,18 @@
       <h1>{{this.$cookies.get("user")}}</h1>
     </div>
     <div v-if="isLogin==false">
-      <p class="text1"></p>
-      <p class="text2" v-bind="handleText()">{{this.text.text}}</p>
-      <div class="btn" v-bind="handleBtn()">{{this.text.btn}}</div>
+      <div class="text-h1"><p class="text-h1-content">{{text.animation}}</p></div>
+      <div class="text-h3"><p class="text-h3-content" v-if="text.text==true">Please login or register to use Web application</p></div>
+      <div class="btn">
+        <div class="btn-content" v-if="text.btn==true">
+          <router-link to="/login">
+            <button class="btn-login">Login</button>
+          </router-link>
+          <router-link to="/register">
+            <button class="btn-register">Register</button>
+          </router-link>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -18,10 +27,16 @@ export default {
   data() {
     return {
       text: {
-        text: "",
-        btn: ""
+        animation: "",
+        text: false,
+        btn: false
       }
     };
+  },
+  mounted() {
+    this.handleText();
+    this.handleBtn();
+    this.textLagre();
   },
   computed: {
     ...mapState({
@@ -29,31 +44,31 @@ export default {
     })
   },
   methods: {
+    textLagre() {
+      let text = "WELLCOME";
+      let arrText = [];
+
+      for (var i = 0; i < text.length; i++) {
+        arrText.push(text[i]);
+      }
+      let newText = "";
+      arrText.forEach((element, index) => {
+        setTimeout(() => {
+          this.text.animation = newText + element;
+          newText = newText + element;
+        }, 200 * (index + 1));
+      });
+    },
     handleText() {
       setTimeout(() => {
-        console.log("texst1");
-        return (this.text.text =
-          "Please login or register to use Web application");
+        return (this.text.text = true);
       }, 1700);
     },
     handleBtn() {
       setTimeout(() => {
-        console.log("hi");
-        return (
-          <div>
-            <a href="/login">
-              <button class="btn-login">Login</button>
-            </a>
-            <a href="/register">
-              <button class="btn-register">Register</button>
-            </a>
-          </div>
-        );
+        this.text.btn = true;
       }, 2700);
     }
-  },
-  render() {
-    return this.handleBtn();
   }
 };
 </script>
@@ -69,30 +84,53 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  height: 90vh;
+  height: 91vh;
   width: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
+  position: relative;
+  z-index: 0;
 }
-/* .text1 {
+button {
+  height: 2.5rem;
+  width: 8rem;
+  margin: 1rem;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  border: #007bff;
+  background-color: #007bff;
+  color: white;
+}
+button:hover {
+  border: #f37748;
+  background-color: #f37748;
+}
+.text-h1 {
   height: 8rem;
   font-size: 5rem;
   font-weight: bold;
+}
+.text-h1-content {
   animation: text1 3s;
-} */
-.text2 {
+}
+.text-h3 {
   height: 5rem;
   font-size: 2rem;
   font-style: italic;
   text-align: center;
-  animation: text2 2s 1.5s;
+}
+.text-h3-content {
+  animation: text2 2s;
 }
 .btn {
   height: 3rem;
-  animation: btn 2s 2.5s;
+}
+.btn-content {
+  animation: btn 2s;
 }
 @keyframes text1 {
   0% {

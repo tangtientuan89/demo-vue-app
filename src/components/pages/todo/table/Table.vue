@@ -11,11 +11,11 @@
         </thead>
         <tbody>
           <tr v-for="(items, index) in data" :key="items._id" class="row">
-            <th class="col-1">{{index+1}}</th>
-            <td class="col-3">
+            <th class="col-1 d-flex justify-content-center align-items-center">{{index+1}}</th>
+            <td class="col-3 d-flex justify-content-center align-items-center">
               <router-link :to="`/to-do/${items.title+'-post'+items._id+'.html'}`">{{items.title}}</router-link>
             </td>
-            <td class="col-5">
+            <td class="col-5 d-flex justify-content-center align-items-center">
               <router-link :to="`/to-do/${items.title+'-post'+items._id+'.html'}`">{{items.content}}</router-link>
             </td>
             <td class="col-3 d-flex justify-content-center">

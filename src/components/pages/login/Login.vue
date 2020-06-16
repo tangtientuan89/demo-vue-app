@@ -25,12 +25,6 @@
           type="password"
         ></b-form-input>
       </b-form-group>
-
-      <b-form-group id="input-group-4">
-        <!-- <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-          <b-form-checkbox value="me">Check me out</b-form-checkbox>
-        </b-form-checkbox-group>-->
-      </b-form-group>
       <div class="text-danger py-3">{{message}}</div>
       <b-button type="submit" variant="primary" @click="fetchLogin()">Login</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
@@ -73,7 +67,6 @@ export default {
             return this.redirectHome();
           }
           if (res.data.code == 400) {
-            console.log(res.data.message.message);
             this.message = res.data.message.message;
           }
         })

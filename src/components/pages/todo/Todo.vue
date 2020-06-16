@@ -80,7 +80,8 @@ export default {
            return this.$store.dispatch("getDataTodo", this.data);
           }
           if(res.data.code == 404){
-            this.$router.push("/error")
+            this.$store.dispatch("getDataError",res.data.message)
+             this.$router.push("/error");
           }
         })
         .catch(err => this.$router.push("/error"));

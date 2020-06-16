@@ -19,13 +19,13 @@
               <template v-slot:button-content>
                 <em :key="getUser()">{{user}}</em>
               </template>
-              <b-dropdown-item to="/">ChangePassword</b-dropdown-item>
+              <b-dropdown-item to="/change-password">ChangePassword</b-dropdown-item>
               <b-dropdown-item to="/" @click="removeDataLocal">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </div>
           <div v-if="isLogin == false">
             <router-link to="/login">
-              <b-btn>Login</b-btn>
+              <b-btn class="px-3">Login</b-btn>
             </router-link>
           </div>
         </b-navbar-nav>
