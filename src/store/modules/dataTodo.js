@@ -6,11 +6,9 @@ const getters = {};
 const mutations = {
   getDataTodo(state, payload) {
     state.dataTodo = payload;
-    console.log("getDataTodo", state.dataTodo);
   },
   editDataTodo(state, payload) {
     state.editData = payload;
-    console.log("editdata", state.editData);
   }
 };
 const actions = {
@@ -27,3 +25,4 @@ export default {
   mutations,
   actions
 };
+

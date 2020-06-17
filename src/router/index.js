@@ -9,6 +9,9 @@ import Admin from "../components/pages/admin/Admin";
 import DetailUser from "../components/pages/admin/DetailUser";
 import Detail from "../components/pages/todo/Detail";
 import Error from "../components/pages/error/Error";
+
+import news from "./news"
+
 Vue.use(Router);
 
 const router = new Router({
@@ -64,7 +67,8 @@ const router = new Router({
       path: "/to-do/:title-post:_id.html",
       name: "Detail",
       component: Detail
-    }
+    },
+    news
   ]
 });
 router.beforeEach((to, from, next) => {
@@ -104,3 +108,8 @@ router.beforeEach((to, from, next) => {
 // });
 
 export default router;
+
+
+
+
+/* eslint-disable */
