@@ -1,15 +1,17 @@
 <template>
-    <div>
-news
-    </div>
+  <div>
+    <Quill />
+  </div>
 </template>
 
 <script>
-    export default {
-        
+import Quill from "./quill/Quill";
+export default {
+    components:{
+        Quill,
     }
+};
 </script>
 
 <style lang="scss" scoped>
-
 </style>

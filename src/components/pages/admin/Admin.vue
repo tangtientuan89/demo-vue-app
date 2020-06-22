@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Manage user</h1>
+    <h1>Manage users</h1>
     <SearchUser @giveTextSearch="handleSearch" />
     <div class="container table-admin">
       <table class="table table-sm table-striped table-hover">

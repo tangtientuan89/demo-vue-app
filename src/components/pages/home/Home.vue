@@ -5,8 +5,15 @@
       <h1>{{this.$cookies.get("user")}}</h1>
     </div>
     <div v-if="isLogin==false">
-      <div class="text-h1"><p class="text-h1-content">{{text.animation}}</p></div>
-      <div class="text-h3"><p class="text-h3-content" v-if="text.text==true">Please login or register to use Web application</p></div>
+      <div class="text-h1">
+        <p class="text-h1-content">{{text.animation}}</p>
+      </div>
+      <div class="text-h3">
+        <p
+          class="text-h3-content"
+          v-if="text.text==true"
+        >Please login or register to use Web application</p>
+      </div>
       <div class="btn">
         <div class="btn-content" v-if="text.btn==true">
           <router-link to="/login">
@@ -72,6 +79,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .home {
   background: linear-gradient(
@@ -173,5 +181,20 @@ button:hover {
     opacity: 1;
     transform: scale(1);
   }
+}
+@media screen and (max-width: 600px) {
+ .text-h1 {
+  height: 10rem;
+  padding: 1rem;
+  font-size: 3rem;
+  font-weight: bold;
+}
+.text-h3 {
+  height: 8rem;
+   padding: 1rem;
+  font-size: 1.5rem;
+  font-style: italic;
+  text-align: center;
+}
 }
 </style>

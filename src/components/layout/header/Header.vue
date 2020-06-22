@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" variant="info">
+  <div class="">
+    <b-navbar class="header" toggleable="lg" type="dark" variant="info">
+      <div class="container">
       <b-navbar-brand to="/">Home</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -26,11 +27,12 @@
           </div>
           <div v-if="isLogin == false">
             <router-link to="/login">
-              <b-btn class="px-3">Login</b-btn>
+              <b-btn class="px-4">Login</b-btn>
             </router-link>
           </div>
         </b-navbar-nav>
       </b-collapse>
+      </div>
     </b-navbar>
   </div>
 </template>
@@ -67,4 +69,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.header{
+  min-height: 9vh;
+}
+</style>
